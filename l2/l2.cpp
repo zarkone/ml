@@ -1,38 +1,40 @@
 #include <iostream>
 using namespace std;
 
-int NOD(int a,int b)
-{
-  while(a!=0 && b!=0)
-    {
-       if(a>=b) a=a%b;
-           else b=b%a;
-    }
-  return a+b; 
+int sg(int x){ return x>0; }
+long int fact(int n){
+  if (!n) return 1;
+  else return n*fact(n-1);
+}
+long int min (long int x, long int y){
+  if (x > y) return y;
+  else return x;
 }
 
-int HnCh(int ch, int zn, int n){
-  if (n == 0) { 
-   int nod = NOD(ch, zn);
-   ch /= nod;
-   // zn /= nod;
+long int Pi (long int x, long int y, long int z){
+  return !(x % z || y % z);
+}
 
-   return ch; 
- }
+long int e (long int x, long int d){
+  return x/d;
+}
+
+long int d (long int x, long int y){
   
-  ch = ch*n + zn;
-  zn *= n;
-  n--;
-
-  return HnCh(ch,zn,n);
-
-}
-int Hn(int n){
-  if(!n) return 0;
-
-  return add(fact(n), mul(Hn(n-1), n))
+  long int z=min(x,y);
+  while (!Pi(x, y, z) && z>0) z--;
+  return e(x,z);
 }
 
+long int f (long int ch, long int zn, int n){
+  if(!n)
+    return ch;
+  return  f(ch*n+zn, zn*n, n-1) ;  
+}
+
+long int F (int n){
+  return d(f(1, n, n-1), fact(n));
+}
 
 int main()
 {
@@ -41,6 +43,7 @@ int main()
     // unsigned long int z=p(x);
     // printf("простое число с номером %d равно %ld\n",x,z);
     
-    cout << HnCh(1,4, 3);
+    cout << F(4)<< endl;
+
 }
 
