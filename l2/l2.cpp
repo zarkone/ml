@@ -1,46 +1,61 @@
 #include <iostream>
+#include <sstream>
 using namespace std;
 
-int NOD(int a,int b)
-{
-  while(a!=0 && b!=0)
-    {
-       if(a>=b) a=a%b;
-           else b=b%a;
-    }
-  return a+b; 
+int sg(int x){ return x>0; }
+long int fact(int n){
+  if (!n) return 1;
+  else return n*fact(n-1);
 }
 
-int HnCh(int ch, int zn, int n){
-  if (n == 0) { 
-   int nod = NOD(ch, zn);
-   ch /= nod;
-   // zn /= nod;
+long int min (long int x, long int y){
+  if (x > y) return y;
+  else return x;
+}
 
-   return ch; 
- }
+long int Pi (long int x, long int y, long int z){
+  return !(x % z || y % z);
+}
+
+long int d (long int x, long int y){
   
-  ch = ch*n + zn;
-  zn *= n;
-  n--;
-
-  return HnCh(ch,zn,n);
-
-}
-int Hn(int n){
-  if(!n) return 0;
-
-  return add(fact(n), mul(Hn(n-1), n))
+  long int z=min(x,y);
+  while (!Pi(x, y, z) && z>0) z--;
+  return z;
 }
 
+long int e (long int x, long int d){
+  long int z=0;
+  while(z*d < x) z++;
+  return z;
+}
 
-int main()
+long int f (long int ch, long int zn, int n){
+  if(!n)
+    return ch;
+  return  f(ch*n+zn, zn*n, n-1) ;  
+}
+
+long int F (int n){
+  return 
+        e(
+            f(1, n, n-1), 
+            d( 
+              f(1, n, n-1), 
+              fact(n) 
+            ) 
+        );
+}
+
+int main(int argc, char *argv[])
 {
-    int x; 
-    // scanf("%d",&x);
-    // unsigned long int z=p(x);
-    // printf("простое число с номером %d равно %ld\n",x,z);
+    stringstream arg;
+    int  n;
+
+    arg << argv[1];
+    arg >> n; 
     
-    cout << HnCh(1,4, 3);
+    cout << F(n)<< endl;
+
 }
 
