@@ -12,7 +12,7 @@ using namespace std;
 
 int rec(int n) {
   if(n == 1 || n == 0) return 1;
-  
+
   return rec(n - 2) + rec(n - 1);
 }
 int notRec(int n){
@@ -24,6 +24,7 @@ int notRec(int n){
     temp = r1;
     r1 = r2;
     r2 += temp;
+    cout << r2 << " "<<r1 << " " << temp << endl;
   }
 
   return r2;   
