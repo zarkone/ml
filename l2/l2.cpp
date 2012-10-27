@@ -12,8 +12,18 @@ long int mul(long int x, long int y){
   return fplus(mul(x,y-1), x);
 }
 
-
 int sg(int x){ return x>0; }
+// [x/y]
+long int e (long int x, long int d){
+  long int z=0;
+  while(z < x+1 && !sg( mul((z+1),d)-x ) ) z++;
+  return z;
+}
+// x % y
+long int g (long int x, long int d){
+  
+  return mul((x-e(x,d)*d),sg(x-d+1));
+}
 
 long int fact(int n){
   if (!n) return 1;
@@ -21,7 +31,7 @@ long int fact(int n){
 }
 
 long int Pi (long int x, long int y, long int z){
-  return !sg(fplus(x%(y-z), y%(y-z)));
+  return !sg(fplus(g(x,(y-z)), g(y,(y-z))));
 }
 
 long int d (long int x, long int y){
@@ -29,17 +39,6 @@ long int d (long int x, long int y){
   long int z=0;
   while (!Pi(x, y, z) && z<y) z++;
   return z;
-}
-// [x/y]
-long int e (long int x, long int d){
-  long int z=0;
-  while(z < x+1 && !sg( (z+1)*d-x ) ) z++;
-  return z;
-}
-// x % y
-long int g (long int x, long int d){
-  
-  return (x-e(x,d)*d)*sg(x-d+1);
 }
 
 long int f( int n){
